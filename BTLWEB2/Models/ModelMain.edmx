@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SaleShoesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tChiTietGioHang">
+          <Key>
+            <PropertyRef Name="MaChiTietGioHang" />
+          </Key>
+          <Property Name="MaChiTietGioHang" Type="int" Nullable="false" />
+          <Property Name="MaGioHang" Type="int" Nullable="false" />
+          <Property Name="MaSP" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="MaSize" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gia" Type="bigint" />
+          <Property Name="SoLuong" Type="int" />
+        </EntityType>
+        <EntityType Name="tChiTietHoaDon">
+          <Key>
+            <PropertyRef Name="MaChiTietHoaDon" />
+          </Key>
+          <Property Name="MaChiTietHoaDon" Type="int" Nullable="false" />
+          <Property Name="MaHD" Type="int" Nullable="false" />
+          <Property Name="MaSP" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="GhiChu" Type="nchar" MaxLength="50" />
+          <Property Name="SoLuong" Type="int" />
+        </EntityType>
+        <EntityType Name="tGioHang">
+          <Key>
+            <PropertyRef Name="MaGioHang" />
+          </Key>
+          <Property Name="MaGioHang" Type="int" Nullable="false" />
+          <Property Name="TenTK" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tHoaDon">
+          <Key>
+            <PropertyRef Name="MaHD" />
+          </Key>
+          <Property Name="MaHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenTK" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NgayDat" Type="date" />
+        </EntityType>
+        <EntityType Name="tSanPham">
+          <Key>
+            <PropertyRef Name="MaSP" />
+          </Key>
+          <Property Name="MaSP" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenSP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gia" Type="int" />
+          <Property Name="GioiTinh" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Anh" Type="nvarchar" MaxLength="250" />
+          <Property Name="sale" Type="int" />
+        </EntityType>
+        <EntityType Name="tTaiKhoan">
+          <Key>
+            <PropertyRef Name="TenTK" />
+          </Key>
+          <Property Name="TenTK" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenKH" Type="nvarchar" MaxLength="50" />
+          <Property Name="NgaySinh" Type="date" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="XacMinh" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SaleShoes.dbo.CartView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CartView">
+          <Key>
+            <PropertyRef Name="MaGioHang" />
+            <PropertyRef Name="MaSP" />
+          </Key>
+          <Property Name="MaGioHang" Type="int" Nullable="false" />
+          <Property Name="totalCart" Type="bigint" />
+          <Property Name="SoLuong" Type="int" />
+          <Property Name="MaSP" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenSP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gia" Type="int" />
+          <Property Name="Anh" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_tChiTietGioHang_tGioHang">
+          <End Role="tGioHang" Type="Self.tGioHang" Multiplicity="1" />
+          <End Role="tChiTietGioHang" Type="Self.tChiTietGioHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tGioHang">
+              <PropertyRef Name="MaGioHang" />
+            </Principal>
+            <Dependent Role="tChiTietGioHang">
+              <PropertyRef Name="MaGioHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tChiTietGioHang_tSanPham">
+          <End Role="tSanPham" Type="Self.tSanPham" Multiplicity="1" />
+          <End Role="tChiTietGioHang" Type="Self.tChiTietGioHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tSanPham">
+              <PropertyRef Name="MaSP" />
+            </Principal>
+            <Dependent Role="tChiTietGioHang">
+              <PropertyRef Name="MaSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tChiTietHD_tHoaDon">
+          <End Role="tHoaDon" Type="Self.tHoaDon" Multiplicity="1" />
+          <End Role="tChiTietHoaDon" Type="Self.tChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tHoaDon">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="tChiTietHoaDon">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tChiTietHD_tSanPham">
+          <End Role="tSanPham" Type="Self.tSanPham" Multiplicity="1" />
+          <End Role="tChiTietHoaDon" Type="Self.tChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tSanPham">
+              <PropertyRef Name="MaSP" />
+            </Principal>
+            <Dependent Role="tChiTietHoaDon">
+              <PropertyRef Name="MaSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tHoaDon_tTaiKhoan">
+          <End Role="tTaiKhoan" Type="Self.tTaiKhoan" Multiplicity="1" />
+          <End Role="tHoaDon" Type="Self.tHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTaiKhoan">
+              <PropertyRef Name="TenTK" />
+            </Principal>
+            <Dependent Role="tHoaDon">
+              <PropertyRef Name="TenTK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SaleShoesModelStoreContainer">
+          <EntitySet Name="tChiTietGioHang" EntityType="Self.tChiTietGioHang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tChiTietHoaDon" EntityType="Self.tChiTietHoaDon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tGioHang" EntityType="Self.tGioHang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tHoaDon" EntityType="Self.tHoaDon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tSanPham" EntityType="Self.tSanPham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tTaiKhoan" EntityType="Self.tTaiKhoan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartView" EntityType="Self.CartView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CartView].[MaGioHang] AS [MaGioHang], 
+    [CartView].[totalCart] AS [totalCart], 
+    [CartView].[SoLuong] AS [SoLuong], 
+    [CartView].[MaSP] AS [MaSP], 
+    [CartView].[TenSP] AS [TenSP], 
+    [CartView].[Gia] AS [Gia], 
+    [CartView].[Anh] AS [Anh]
+    FROM [dbo].[CartView] AS [CartView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tChiTietGioHang_tGioHang" Association="Self.FK_tChiTietGioHang_tGioHang">
+            <End Role="tGioHang" EntitySet="tGioHang" />
+            <End Role="tChiTietGioHang" EntitySet="tChiTietGioHang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tChiTietGioHang_tSanPham" Association="Self.FK_tChiTietGioHang_tSanPham">
+            <End Role="tSanPham" EntitySet="tSanPham" />
+            <End Role="tChiTietGioHang" EntitySet="tChiTietGioHang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tChiTietHD_tHoaDon" Association="Self.FK_tChiTietHD_tHoaDon">
+            <End Role="tHoaDon" EntitySet="tHoaDon" />
+            <End Role="tChiTietHoaDon" EntitySet="tChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tChiTietHD_tSanPham" Association="Self.FK_tChiTietHD_tSanPham">
+            <End Role="tSanPham" EntitySet="tSanPham" />
+            <End Role="tChiTietHoaDon" EntitySet="tChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tHoaDon_tTaiKhoan" Association="Self.FK_tHoaDon_tTaiKhoan">
+            <End Role="tTaiKhoan" EntitySet="tTaiKhoan" />
+            <End Role="tHoaDon" EntitySet="tHoaDon" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SaleShoesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tChiTietGioHang">
+          <Key>
+            <PropertyRef Name="MaChiTietGioHang" />
+          </Key>
+          <Property Name="MaChiTietGioHang" Type="Int32" Nullable="false" />
+          <Property Name="MaGioHang" Type="Int32" Nullable="false" />
+          <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MaSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gia" Type="Int64" />
+          <Property Name="SoLuong" Type="Int32" />
+          <NavigationProperty Name="tGioHang" Relationship="Self.FK_tChiTietGioHang_tGioHang" FromRole="tChiTietGioHang" ToRole="tGioHang" />
+          <NavigationProperty Name="tSanPham" Relationship="Self.FK_tChiTietGioHang_tSanPham" FromRole="tChiTietGioHang" ToRole="tSanPham" />
+        </EntityType>
+        <EntityType Name="tChiTietHoaDon">
+          <Key>
+            <PropertyRef Name="MaChiTietHoaDon" />
+          </Key>
+          <Property Name="MaChiTietHoaDon" Type="Int32" Nullable="false" />
+          <Property Name="MaHD" Type="Int32" Nullable="false" />
+          <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GhiChu" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="SoLuong" Type="Int32" />
+          <NavigationProperty Name="tHoaDon" Relationship="Self.FK_tChiTietHD_tHoaDon" FromRole="tChiTietHoaDon" ToRole="tHoaDon" />
+          <NavigationProperty Name="tSanPham" Relationship="Self.FK_tChiTietHD_tSanPham" FromRole="tChiTietHoaDon" ToRole="tSanPham" />
+        </EntityType>
+        <EntityType Name="tGioHang">
+          <Key>
+            <PropertyRef Name="MaGioHang" />
+          </Key>
+          <Property Name="MaGioHang" Type="Int32" Nullable="false" />
+          <Property Name="TenTK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tChiTietGioHangs" Relationship="Self.FK_tChiTietGioHang_tGioHang" FromRole="tGioHang" ToRole="tChiTietGioHang" />
+        </EntityType>
+        <EntityType Name="tHoaDon">
+          <Key>
+            <PropertyRef Name="MaHD" />
+          </Key>
+          <Property Name="MaHD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenTK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NgayDat" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tChiTietHoaDons" Relationship="Self.FK_tChiTietHD_tHoaDon" FromRole="tHoaDon" ToRole="tChiTietHoaDon" />
+          <NavigationProperty Name="tTaiKhoan" Relationship="Self.FK_tHoaDon_tTaiKhoan" FromRole="tHoaDon" ToRole="tTaiKhoan" />
+        </EntityType>
+        <EntityType Name="tSanPham">
+          <Key>
+            <PropertyRef Name="MaSP" />
+          </Key>
+          <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TenSP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gia" Type="Int32" />
+          <Property Name="GioiTinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TheLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Anh" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="sale" Type="Int32" />
+          <NavigationProperty Name="tChiTietGioHangs" Relationship="Self.FK_tChiTietGioHang_tSanPham" FromRole="tSanPham" ToRole="tChiTietGioHang" />
+          <NavigationProperty Name="tChiTietHoaDons" Relationship="Self.FK_tChiTietHD_tSanPham" FromRole="tSanPham" ToRole="tChiTietHoaDon" />
+        </EntityType>
+        <EntityType Name="tTaiKhoan">
+          <Key>
+            <PropertyRef Name="TenTK" />
+          </Key>
+          <Property Name="TenTK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenKH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XacMinh" Type="Boolean" />
+          <NavigationProperty Name="tHoaDons" Relationship="Self.FK_tHoaDon_tTaiKhoan" FromRole="tTaiKhoan" ToRole="tHoaDon" />
+        </EntityType>
+        <EntityType Name="CartView">
+          <Key>
+            <PropertyRef Name="MaGioHang" />
+            <PropertyRef Name="MaSP" />
+          </Key>
+          <Property Name="MaGioHang" Type="Int32" Nullable="false" />
+          <Property Name="totalCart" Type="Int64" />
+          <Property Name="SoLuong" Type="Int32" />
+          <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TenSP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gia" Type="Int32" />
+          <Property Name="Anh" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_tChiTietGioHang_tGioHang">
+          <End Role="tGioHang" Type="Self.tGioHang" Multiplicity="1" />
+          <End Role="tChiTietGioHang" Type="Self.tChiTietGioHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tGioHang">
+              <PropertyRef Name="MaGioHang" />
+            </Principal>
+            <Dependent Role="tChiTietGioHang">
+              <PropertyRef Name="MaGioHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tChiTietGioHang_tSanPham">
+          <End Role="tSanPham" Type="Self.tSanPham" Multiplicity="1" />
+          <End Role="tChiTietGioHang" Type="Self.tChiTietGioHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tSanPham">
+              <PropertyRef Name="MaSP" />
+            </Principal>
+            <Dependent Role="tChiTietGioHang">
+              <PropertyRef Name="MaSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tChiTietHD_tHoaDon">
+          <End Role="tHoaDon" Type="Self.tHoaDon" Multiplicity="1" />
+          <End Role="tChiTietHoaDon" Type="Self.tChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tHoaDon">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="tChiTietHoaDon">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tChiTietHD_tSanPham">
+          <End Role="tSanPham" Type="Self.tSanPham" Multiplicity="1" />
+          <End Role="tChiTietHoaDon" Type="Self.tChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tSanPham">
+              <PropertyRef Name="MaSP" />
+            </Principal>
+            <Dependent Role="tChiTietHoaDon">
+              <PropertyRef Name="MaSP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tHoaDon_tTaiKhoan">
+          <End Role="tTaiKhoan" Type="Self.tTaiKhoan" Multiplicity="1" />
+          <End Role="tHoaDon" Type="Self.tHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTaiKhoan">
+              <PropertyRef Name="TenTK" />
+            </Principal>
+            <Dependent Role="tHoaDon">
+              <PropertyRef Name="TenTK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SaleShoesEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tChiTietGioHangs" EntityType="Self.tChiTietGioHang" />
+          <EntitySet Name="tChiTietHoaDons" EntityType="Self.tChiTietHoaDon" />
+          <EntitySet Name="tGioHangs" EntityType="Self.tGioHang" />
+          <EntitySet Name="tHoaDons" EntityType="Self.tHoaDon" />
+          <EntitySet Name="tSanPhams" EntityType="Self.tSanPham" />
+          <EntitySet Name="tTaiKhoans" EntityType="Self.tTaiKhoan" />
+          <EntitySet Name="CartViews" EntityType="Self.CartView" />
+          <AssociationSet Name="FK_tChiTietGioHang_tGioHang" Association="Self.FK_tChiTietGioHang_tGioHang">
+            <End Role="tGioHang" EntitySet="tGioHangs" />
+            <End Role="tChiTietGioHang" EntitySet="tChiTietGioHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tChiTietGioHang_tSanPham" Association="Self.FK_tChiTietGioHang_tSanPham">
+            <End Role="tSanPham" EntitySet="tSanPhams" />
+            <End Role="tChiTietGioHang" EntitySet="tChiTietGioHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tChiTietHD_tHoaDon" Association="Self.FK_tChiTietHD_tHoaDon">
+            <End Role="tHoaDon" EntitySet="tHoaDons" />
+            <End Role="tChiTietHoaDon" EntitySet="tChiTietHoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tChiTietHD_tSanPham" Association="Self.FK_tChiTietHD_tSanPham">
+            <End Role="tSanPham" EntitySet="tSanPhams" />
+            <End Role="tChiTietHoaDon" EntitySet="tChiTietHoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tHoaDon_tTaiKhoan" Association="Self.FK_tHoaDon_tTaiKhoan">
+            <End Role="tTaiKhoan" EntitySet="tTaiKhoans" />
+            <End Role="tHoaDon" EntitySet="tHoaDons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SaleShoesModelStoreContainer" CdmEntityContainer="SaleShoesEntities1">
+          <EntitySetMapping Name="tChiTietGioHangs">
+            <EntityTypeMapping TypeName="SaleShoesModel.tChiTietGioHang">
+              <MappingFragment StoreEntitySet="tChiTietGioHang">
+                <ScalarProperty Name="MaChiTietGioHang" ColumnName="MaChiTietGioHang" />
+                <ScalarProperty Name="MaGioHang" ColumnName="MaGioHang" />
+                <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+                <ScalarProperty Name="MaSize" ColumnName="MaSize" />
+                <ScalarProperty Name="Gia" ColumnName="Gia" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tChiTietHoaDons">
+            <EntityTypeMapping TypeName="SaleShoesModel.tChiTietHoaDon">
+              <MappingFragment StoreEntitySet="tChiTietHoaDon">
+                <ScalarProperty Name="MaChiTietHoaDon" ColumnName="MaChiTietHoaDon" />
+                <ScalarProperty Name="MaHD" ColumnName="MaHD" />
+                <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tGioHangs">
+            <EntityTypeMapping TypeName="SaleShoesModel.tGioHang">
+              <MappingFragment StoreEntitySet="tGioHang">
+                <ScalarProperty Name="MaGioHang" ColumnName="MaGioHang" />
+                <ScalarProperty Name="TenTK" ColumnName="TenTK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tHoaDons">
+            <EntityTypeMapping TypeName="SaleShoesModel.tHoaDon">
+              <MappingFragment StoreEntitySet="tHoaDon">
+                <ScalarProperty Name="MaHD" ColumnName="MaHD" />
+                <ScalarProperty Name="TenTK" ColumnName="TenTK" />
+                <ScalarProperty Name="NgayDat" ColumnName="NgayDat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tSanPhams">
+            <EntityTypeMapping TypeName="SaleShoesModel.tSanPham">
+              <MappingFragment StoreEntitySet="tSanPham">
+                <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+                <ScalarProperty Name="TenSP" ColumnName="TenSP" />
+                <ScalarProperty Name="Gia" ColumnName="Gia" />
+                <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+                <ScalarProperty Name="TheLoai" ColumnName="TheLoai" />
+                <ScalarProperty Name="Anh" ColumnName="Anh" />
+                <ScalarProperty Name="sale" ColumnName="sale" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tTaiKhoans">
+            <EntityTypeMapping TypeName="SaleShoesModel.tTaiKhoan">
+              <MappingFragment StoreEntitySet="tTaiKhoan">
+                <ScalarProperty Name="TenTK" ColumnName="TenTK" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="TenKH" ColumnName="TenKH" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="XacMinh" ColumnName="XacMinh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartViews">
+            <EntityTypeMapping TypeName="SaleShoesModel.CartView">
+              <MappingFragment StoreEntitySet="CartView">
+                <ScalarProperty Name="MaGioHang" ColumnName="MaGioHang" />
+                <ScalarProperty Name="totalCart" ColumnName="totalCart" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+                <ScalarProperty Name="TenSP" ColumnName="TenSP" />
+                <ScalarProperty Name="Gia" ColumnName="Gia" />
+                <ScalarProperty Name="Anh" ColumnName="Anh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

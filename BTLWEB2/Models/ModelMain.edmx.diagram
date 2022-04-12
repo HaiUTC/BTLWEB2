@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6fdc56dc6b424dbeac1ca909d35c592d" Name="Diagram1">
+        <EntityTypeShape EntityType="SaleShoesModel.tChiTietGioHang" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaleShoesModel.tChiTietHoaDon" Width="1.5" PointX="6" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaleShoesModel.tGioHang" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaleShoesModel.tHoaDon" Width="1.5" PointX="3.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaleShoesModel.tSanPham" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaleShoesModel.tTaiKhoan" Width="1.5" PointX="1.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaleShoesModel.CartView" Width="1.5" PointX="5.75" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="SaleShoesModel.FK_tChiTietGioHang_tGioHang" ManuallyRouted="false" />
+        <AssociationConnector Association="SaleShoesModel.FK_tChiTietGioHang_tSanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="SaleShoesModel.FK_tChiTietHD_tHoaDon" ManuallyRouted="false" />
+        <AssociationConnector Association="SaleShoesModel.FK_tChiTietHD_tSanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="SaleShoesModel.FK_tHoaDon_tTaiKhoan" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
