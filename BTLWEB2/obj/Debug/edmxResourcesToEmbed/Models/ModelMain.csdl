@@ -71,16 +71,20 @@
   </EntityType>
   <EntityType Name="CartView">
     <Key>
+      <PropertyRef Name="MaChiTietGioHang" />
       <PropertyRef Name="MaGioHang" />
+      <PropertyRef Name="MaSize" />
       <PropertyRef Name="MaSP" />
     </Key>
-    <Property Name="MaGioHang" Type="Int32" Nullable="false" />
     <Property Name="totalCart" Type="Int64" />
-    <Property Name="SoLuong" Type="Int32" />
+    <Property Name="MaChiTietGioHang" Type="Int32" Nullable="false" />
+    <Property Name="MaGioHang" Type="Int32" Nullable="false" />
+    <Property Name="MaSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="MaSP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-    <Property Name="TenSP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Gia" Type="Int32" />
+    <Property Name="SoLuong" Type="Int32" />
     <Property Name="Anh" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Gia" Type="Int32" />
+    <Property Name="TenSP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_tChiTietGioHang_tGioHang">
     <End Role="tGioHang" Type="Self.tGioHang" Multiplicity="1" />
@@ -142,7 +146,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="SaleShoesEntities1" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="SaleShoesEntities2" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="tChiTietGioHangs" EntityType="Self.tChiTietGioHang" />
     <EntitySet Name="tChiTietHoaDons" EntityType="Self.tChiTietHoaDon" />
     <EntitySet Name="tGioHangs" EntityType="Self.tGioHang" />

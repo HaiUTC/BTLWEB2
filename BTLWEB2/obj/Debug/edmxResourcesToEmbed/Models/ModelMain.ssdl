@@ -63,16 +63,20 @@
 warning 6002: The table/view 'SaleShoes.dbo.CartView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="CartView">
     <Key>
+      <PropertyRef Name="MaChiTietGioHang" />
       <PropertyRef Name="MaGioHang" />
+      <PropertyRef Name="MaSize" />
       <PropertyRef Name="MaSP" />
     </Key>
-    <Property Name="MaGioHang" Type="int" Nullable="false" />
     <Property Name="totalCart" Type="bigint" />
-    <Property Name="SoLuong" Type="int" />
+    <Property Name="MaChiTietGioHang" Type="int" Nullable="false" />
+    <Property Name="MaGioHang" Type="int" Nullable="false" />
+    <Property Name="MaSize" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="MaSP" Type="nchar" MaxLength="10" Nullable="false" />
-    <Property Name="TenSP" Type="nvarchar" MaxLength="50" />
-    <Property Name="Gia" Type="int" />
+    <Property Name="SoLuong" Type="int" />
     <Property Name="Anh" Type="nvarchar" MaxLength="250" />
+    <Property Name="Gia" Type="int" />
+    <Property Name="TenSP" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_tChiTietGioHang_tGioHang">
     <End Role="tGioHang" Type="Self.tGioHang" Multiplicity="1" />
@@ -143,13 +147,15 @@ warning 6002: The table/view 'SaleShoes.dbo.CartView' does not have a primary ke
     <EntitySet Name="tTaiKhoan" EntityType="Self.tTaiKhoan" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CartView" EntityType="Self.CartView" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
-    [CartView].[MaGioHang] AS [MaGioHang], 
     [CartView].[totalCart] AS [totalCart], 
-    [CartView].[SoLuong] AS [SoLuong], 
+    [CartView].[MaChiTietGioHang] AS [MaChiTietGioHang], 
+    [CartView].[MaGioHang] AS [MaGioHang], 
+    [CartView].[MaSize] AS [MaSize], 
     [CartView].[MaSP] AS [MaSP], 
-    [CartView].[TenSP] AS [TenSP], 
+    [CartView].[SoLuong] AS [SoLuong], 
+    [CartView].[Anh] AS [Anh], 
     [CartView].[Gia] AS [Gia], 
-    [CartView].[Anh] AS [Anh]
+    [CartView].[TenSP] AS [TenSP]
     FROM [dbo].[CartView] AS [CartView]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_tChiTietGioHang_tGioHang" Association="Self.FK_tChiTietGioHang_tGioHang">

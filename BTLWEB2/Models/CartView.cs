@@ -14,12 +14,14 @@ namespace BTLWEB2.Models
     
     public partial class CartView
     {
-        public int MaGioHang { get; set; }
         public Nullable<long> totalCart { get; set; }
-        public Nullable<int> SoLuong { get; set; }
+        public int MaChiTietGioHang { get; set; }
+        public int MaGioHang { get; set; }
+        public string MaSize { get; set; }
         public string MaSP { get; set; }
-        public string TenSP { get; set; }
-        public Nullable<int> Gia { get; set; }
+        public Nullable<int> SoLuong { get; set; }
         public string Anh { get; set; }
+        public Nullable<int> Gia { get; set; }
+        public string TenSP { get; set; }
     }
 }

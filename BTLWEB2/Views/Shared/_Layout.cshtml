@@ -123,6 +123,24 @@
     <script src="~/Scripts/respond.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script>
+        $('input[name=quantity]').change(function (e) {
+            const valQuan = e.target.value
+            const id = $(this).attr('data-id');
+            console.log(id);
+            fetch(`/Cart/Update_Quantity_Cart/${id}/${valQuan}`, {
+                method: "POST",
+                
+            })
+                .then(function (response) {
+                    const data = response.json();
+                    window.location.reload();
+                  
+                })  
+                
+        });
+        
+    </script>
 </body>
 
 </html>

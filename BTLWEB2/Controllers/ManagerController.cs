@@ -10,99 +10,178 @@ namespace BTLWEB2.Controllers.Admin
 {
     public class ManagerController : Controller
     {
-        SaleShoesEntities1 db = new SaleShoesEntities1();
+        SaleShoesEntities2 db = new SaleShoesEntities2();
         public ActionResult Index()
         {
-            return View();
+            if (Session["tenTKSS"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public ActionResult AdminCustomer()
         {
-            var customer = db.tTaiKhoans.ToList();
-            return View(customer);
+            if (Session["tenTKSS"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                var customer = db.tTaiKhoans.ToList();
+                return View(customer);
+            }
+            
         }
 
         public ActionResult AdminProduct()
         {
-            var sanPhams = db.tSanPhams.ToList();
-            return View(sanPhams);
+            if (Session["tenTKSS"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                var sanPhams = db.tSanPhams.ToList();
+                return View(sanPhams);
+            }
+            
         }
 
         public ActionResult AdminOrder()
         {
-            var order = db.tHoaDons.ToList();
-            return View(order);
+            if (Session["tenTKSS"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                var order = db.tHoaDons.ToList();
+                return View(order);
+            }
+            
         }
 
         [HttpGet]
         public ActionResult EditCustomer(string TenTK)
         {
-            var tk = db.tTaiKhoans.Where(x => x.TenTK == TenTK).First();
-            return View(tk);
+            if (Session["tenTKSS"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                var tk = db.tTaiKhoans.Where(x => x.TenTK == TenTK).First();
+                return View(tk);
+            }
+            
         }
 
         [HttpPost]
         public ActionResult EditCustomer(tTaiKhoan tk)
         {
-            if (ModelState.IsValid)
+            if (Session["tenTKSS"] == null)
             {
-                db.Entry(tk).State = EntityState.Modified;
-                db.SaveChanges();
+                return RedirectToAction("Login", "Home");
             }
-            return RedirectToAction("Index");
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Entry(tk).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            
         }
 
         [HttpGet]
         public ActionResult RemoveCustomer(string TenTK)
         {
-            var tk = db.tTaiKhoans.Single(n => n.TenTK == TenTK);
-            if (tk == null)
+            if (Session["tenTKSS"] == null)
             {
-                Response.StatusCode = 404;
-                return null;
+                return RedirectToAction("Login", "Home");
             }
-            return View(tk);
+            else
+            {
+                var tk = db.tTaiKhoans.Single(n => n.TenTK == TenTK);
+                if (tk == null)
+                {
+                    Response.StatusCode = 404;
+                    return null;
+                }
+                return View(tk);
+            }
+            
         }
 
         [HttpPost, ActionName("RemoveCustomer")]
         public ActionResult ConfirmRemoveCustomer(string TenTK)
         {
-            var tk = db.tTaiKhoans.Single(n => n.TenTK == TenTK);
-            if (tk == null)
+            if (Session["tenTKSS"] == null)
             {
-                Response.StatusCode = 404;
-                return null;
+                return RedirectToAction("Login", "Home");
             }
-            db.tTaiKhoans.Remove(tk);
-            db.SaveChanges();
-            return RedirectToAction("Index", "Manage");
+            else
+            {
+                var tk = db.tTaiKhoans.Single(n => n.TenTK == TenTK);
+                if (tk == null)
+                {
+                    Response.StatusCode = 404;
+                    return null;
+                }
+                db.tTaiKhoans.Remove(tk);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Manage");
+            }
+            
         }
 
         public ActionResult Create()
         {
-            return View();
+            if (Session["tenTKSS"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         [HttpPost]
         public ActionResult Create(tSanPham sp, HttpPostedFileBase Anh)
         {
-            if (ModelState.IsValid)
+            if (Session["tenTKSS"] == null)
             {
-                if (Anh != null)
-                {
-                    var pic = System.IO.Path.GetFileName(Anh.FileName);
-                    var path = System.IO.Path.Combine(
-                        Server.MapPath("~/Content/images"), pic);
-                    // file is uploaded
-                    Anh.SaveAs(path);
-                    sp.Anh = pic;
-                }
-                db.tSanPhams.Add(sp);
+                return RedirectToAction("Login", "Home");
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    if (Anh != null)
+                    {
+                        var pic = System.IO.Path.GetFileName(Anh.FileName);
+                        var path = System.IO.Path.Combine(
+                            Server.MapPath("~/Content/image"), pic);
+                        // file is uploaded
+                        Anh.SaveAs(path);
+                        sp.Anh = pic;
+                    }
+                    db.tSanPhams.Add(sp);
+                }
 
-            db.SaveChanges();
-            ViewBag.message = "Add Product successfully!";
-            return View();
+                db.SaveChanges();
+                ViewBag.message = "Add Product successfully!";
+                return View();
+            }
+            
         }
 
 
@@ -110,62 +189,94 @@ namespace BTLWEB2.Controllers.Admin
         // Edit Product 
         public ActionResult Edit(string id)
         {
-            var product = db.tSanPhams.Where(x => x.MaSP == id).First();
-            return View(product);
+            if (Session["tenTKSS"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                var product = db.tSanPhams.Where(x => x.MaSP == id).First();
+                return View(product);
+            }
+            
         }
 
         [HttpPost]
         public ActionResult Edit(tSanPham sp, HttpPostedFileBase Anh)
         {
-            var product = db.tSanPhams.Where(x => x.MaSP == sp.MaSP).First();
-            product.MaSP = sp.MaSP;
-            product.TenSP = sp.TenSP;
-            product.Gia = sp.Gia;
-            product.GioiTinh = sp.GioiTinh;
-            product.sale = sp.sale;
-            product.TheLoai = sp.TheLoai;
-            if (Anh != null)
+            if (Session["tenTKSS"] == null)
             {
-                var pic = System.IO.Path.GetFileName(Anh.FileName);
-                var path = System.IO.Path.Combine(
-                    Server.MapPath("~/Content/images"), pic);
-                // file is uploaded
-                Anh.SaveAs(path);
-                product.Anh = pic;
+                return RedirectToAction("Login", "Home");
             }
-            ViewBag.message = "Update Product successfully!";
-            db.Entry(product).State = EntityState.Modified;
-            db.SaveChanges();
+            else
+            {
+                var product = db.tSanPhams.Where(x => x.MaSP == sp.MaSP).First();
+                product.MaSP = sp.MaSP;
+                product.TenSP = sp.TenSP;
+                product.Gia = sp.Gia;
+                product.GioiTinh = sp.GioiTinh;
+                product.sale = sp.sale;
+                product.TheLoai = sp.TheLoai;
+                if (Anh != null)
+                {
+                    var pic = System.IO.Path.GetFileName(Anh.FileName);
+                    var path = System.IO.Path.Combine(
+                        Server.MapPath("~/Content/images"), pic);
+                    // file is uploaded
+                    Anh.SaveAs(path);
+                    product.Anh = pic;
+                }
+                ViewBag.message = "Update Product successfully!";
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
 
 
-            return View();
+                return View();
+            }
+            
         }
 
         [HttpGet]
         public ActionResult RemoveProduct(string id)
         {
-            var sanpham = db.tSanPhams.Single(n => n.MaSP == id);
-            if (sanpham == null)
+            if (Session["tenTKSS"] == null)
             {
-                Response.StatusCode = 404;
-                return null;
+                return RedirectToAction("Login", "Home");
             }
+            else
+            {
+                var sanpham = db.tSanPhams.Single(n => n.MaSP == id);
+                if (sanpham == null)
+                {
+                    Response.StatusCode = 404;
+                    return null;
+                }
 
-            return View(sanpham);
+                return View(sanpham);
+            }
+            
         }
 
         [HttpPost, ActionName("RemoveProduct")]
         public ActionResult ConfirmRemoveProduct(string id)
         {
-            var sanpham = db.tSanPhams.Single(n => n.MaSP == id);
-            if (sanpham == null)
+            if (Session["tenTKSS"] == null)
             {
-                Response.StatusCode = 404;
-                return null;
+                return RedirectToAction("Login", "Home");
             }
-            db.tSanPhams.Remove(sanpham);
-            db.SaveChanges();
-            return RedirectToAction("AdminProduct", "Manage");
+            else
+            {
+                var sanpham = db.tSanPhams.Single(n => n.MaSP == id);
+                if (sanpham == null)
+                {
+                    Response.StatusCode = 404;
+                    return null;
+                }
+                db.tSanPhams.Remove(sanpham);
+                db.SaveChanges();
+                return RedirectToAction("AdminProduct", "Manager");
+            }
+           
         }
     }
 }

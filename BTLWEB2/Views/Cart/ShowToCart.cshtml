@@ -40,15 +40,16 @@
                     <div class="one-eight text-center">
                         <span>Total</span>
                     </div>
-                    <div class="one-eight text-center px-4">
+                    @*<div class="one-eight text-center px-4">
                         <span>Remove</span>
-                    </div>
+                    </div>*@
                 </div>
                 @foreach (var item in Model)
-                {
+                {   
+                   
                     <div class="product-cart d-flex">
                         <div class="one-forth">
-                            <div class="product-img" style="background-image: url(@item.Anh);">
+                            <div class="product-img" style="background-image: url(/Content/image/@item.Anh);">
                             </div>
                             <div class="display-tc">
                                 <h3>@item.TenSP</h3>
@@ -61,7 +62,7 @@
                         </div>
                         <div class="one-eight text-center">
                             <div class="display-tc">
-                                <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value=@item.SoLuong min="1" max="100">
+                                <input data-id=@item.MaChiTietGioHang type="text" id="quantity" name="quantity" class="form-control input-number text-center" value=@item.SoLuong min="1" max="100">
                             </div>
                         </div>
                         <div class="one-eight text-center">
@@ -69,11 +70,11 @@
                                 <span class="price">$@item.totalCart</span>
                             </div>
                         </div>
-                        <div class="one-eight text-center">
+                        @*<div class="one-eight text-center">
                             <div class="display-tc">
                                 <a href="/Cart/RemoveCart/@item.MaSP" class="closed"></a>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 }
             </div>
@@ -86,7 +87,7 @@
                             <form action="#">
                                 <div class="row form-group">
                                     <div class="col-sm-9">
-                                        <input type="text" name="quantity" class="form-control input-number" placeholder="Your Coupon Number...">
+                                        <input type="text" name="quantity" class="form-control input-number " placeholder="Your Coupon Number...">
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="submit" value="Apply Coupon" class="btn btn-primary">

@@ -9,7 +9,7 @@ namespace BTLWEB2.Controllers
 {
     public class ProductController : Controller
     {
-        SaleShoesEntities1 db = new SaleShoesEntities1();
+        SaleShoesEntities2 db = new SaleShoesEntities2();
         public ActionResult Index()
         {
             var products = db.tSanPhams.ToList();

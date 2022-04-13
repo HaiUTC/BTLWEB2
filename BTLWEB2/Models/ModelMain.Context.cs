@@ -13,10 +13,10 @@ namespace BTLWEB2.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SaleShoesEntities1 : DbContext
+    public partial class SaleShoesEntities2 : DbContext
     {
-        public SaleShoesEntities1()
-            : base("name=SaleShoesEntities1")
+        public SaleShoesEntities2()
+            : base("name=SaleShoesEntities2")
         {
         }
     

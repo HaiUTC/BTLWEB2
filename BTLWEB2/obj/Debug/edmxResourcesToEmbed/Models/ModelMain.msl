@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="SaleShoesModelStoreContainer" CdmEntityContainer="SaleShoesEntities1">
+  <EntityContainerMapping StorageEntityContainer="SaleShoesModelStoreContainer" CdmEntityContainer="SaleShoesEntities2">
     <EntitySetMapping Name="tChiTietGioHangs">
       <EntityTypeMapping TypeName="SaleShoesModel.tChiTietGioHang">
         <MappingFragment StoreEntitySet="tChiTietGioHang">
@@ -69,13 +69,15 @@
     <EntitySetMapping Name="CartViews">
       <EntityTypeMapping TypeName="SaleShoesModel.CartView">
         <MappingFragment StoreEntitySet="CartView">
-          <ScalarProperty Name="MaGioHang" ColumnName="MaGioHang" />
           <ScalarProperty Name="totalCart" ColumnName="totalCart" />
-          <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+          <ScalarProperty Name="MaChiTietGioHang" ColumnName="MaChiTietGioHang" />
+          <ScalarProperty Name="MaGioHang" ColumnName="MaGioHang" />
+          <ScalarProperty Name="MaSize" ColumnName="MaSize" />
           <ScalarProperty Name="MaSP" ColumnName="MaSP" />
-          <ScalarProperty Name="TenSP" ColumnName="TenSP" />
-          <ScalarProperty Name="Gia" ColumnName="Gia" />
+          <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
           <ScalarProperty Name="Anh" ColumnName="Anh" />
+          <ScalarProperty Name="Gia" ColumnName="Gia" />
+          <ScalarProperty Name="TenSP" ColumnName="TenSP" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

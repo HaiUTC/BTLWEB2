@@ -10,7 +10,7 @@ namespace BTLWEB2.Controllers
     public class CheckoutController : Controller
     {
         // GET: Checkout
-        SaleShoesEntities1 db = new SaleShoesEntities1();
+        SaleShoesEntities2 db = new SaleShoesEntities2();
         public ActionResult Index()
         {
             return View();

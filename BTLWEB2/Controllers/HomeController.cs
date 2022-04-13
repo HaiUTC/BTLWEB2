@@ -9,16 +9,23 @@ namespace BTLWEB2.Controllers
 {
     public class HomeController : Controller
     {
-        SaleShoesEntities1 db = new SaleShoesEntities1();
+        SaleShoesEntities2 db = new SaleShoesEntities2();
         public ActionResult Index()
         {
             if(Session["tenTKSS"] != null)
             {
                 var tenTK = Session["tenTKSS"].ToString();
                 var checkUserHaveCart = db.tGioHangs.FirstOrDefault(x => x.TenTK == tenTK);
+                if(checkUserHaveCart != null)
+                {
+                    List<tChiTietGioHang> allCtGH = db.tChiTietGioHangs.Where(x => x.MaGioHang == checkUserHaveCart.MaGioHang).ToList();
+                    Session["numberCart"] = allCtGH.Count().ToString();
+                }
+                else
+                {
+                    Session["numberCart"] = 0;
+                }
                 
-                List<tChiTietGioHang> allCtGH = db.tChiTietGioHangs.Where(x => x.MaGioHang == checkUserHaveCart.MaGioHang).ToList();
-                Session["numberCart"] = allCtGH.Count().ToString();
             }
             var listProduct = db.tSanPhams.ToList().Take(12);
             return View(listProduct);
@@ -79,9 +86,10 @@ namespace BTLWEB2.Controllers
                 db.SaveChanges();
 
                 Session["tenTKSS"] = acc.TenTK.ToString();
+                Session["tenKH"] = acc.TenKH.ToString();
                 return RedirectToAction("Index", "Home");
             }
-        }
+        }   
 
         public ActionResult Logout()
         {

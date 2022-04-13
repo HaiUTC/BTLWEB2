@@ -9,7 +9,7 @@ namespace BTLWEB2.Controllers
 {
     public class CartController : Controller
     {
-        SaleShoesEntities1 db = new SaleShoesEntities1();
+        SaleShoesEntities2 db = new SaleShoesEntities2();
 
         [Route("Cart/AddToCart/{id?}/{size?}/{quantity?}")]
         public ActionResult AddToCart(string id, string size, int quantity)
@@ -20,12 +20,13 @@ namespace BTLWEB2.Controllers
             }
             else
             {
+                Random rnd = new Random();
                 var tenTk = Session["tenTKSS"].ToString();
                 var checkUserHaveCart = db.tGioHangs.FirstOrDefault(x => x.TenTK == tenTk);
                 var product = db.tSanPhams.SingleOrDefault(s => s.MaSP == id);
                 if (checkUserHaveCart == null)
                 {
-                    Random rnd = new Random();
+                    
                     var MaGioHang = rnd.Next(999999);
                     var newCart = new tGioHang();
                     newCart.TenTK = Session["tenTKSS"].ToString();
@@ -53,6 +54,7 @@ namespace BTLWEB2.Controllers
                     else
                     {
                         var newDetailCart = new tChiTietGioHang();
+                        newDetailCart.MaChiTietGioHang = rnd.Next(999999);
                         newDetailCart.Gia = product.Gia * quantity;
                         newDetailCart.MaGioHang = checkUserHaveCart.MaGioHang;
                         newDetailCart.MaSize = size;
@@ -86,13 +88,23 @@ namespace BTLWEB2.Controllers
                 return View(cart);
             }  
         }
-        public ActionResult Update_Quantity_Cart(FormCollection form)
+        [HttpPost]
+        [Route("Cart/Update_Quantity_Cart/{id?}/{quantity?}")]
+        public bool Update_Quantity_Cart(int id, int quantity)
         {
-            /*Cart cart = Session["Cart"] as Cart;
-            string id_pro = form["id_product"];
-            int quantity = int.Parse(form["Quantity"]);
-            cart.UpdateQuantity(id_pro, quantity);*/
-            return RedirectToAction("ShowToCart", "Cart");
+            var chitiet = db.tChiTietGioHangs.FirstOrDefault(x => x.MaChiTietGioHang == id);
+            if (quantity == 0)
+            {
+                db.tChiTietGioHangs.Remove(chitiet);
+                db.SaveChanges();
+                return false;
+            }
+            else
+            {
+                chitiet.SoLuong = quantity;
+                db.SaveChanges();
+                return true;
+            }
         }
 
         public ActionResult RemoveCart(string id)

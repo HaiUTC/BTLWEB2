@@ -48,7 +48,7 @@
         <div class="container">
             <div class="row mb-4" style="display: flex; justify-content: space-between;">
                 <h5>Danh sách tất cả sản phẩm</h5>
-                <button class="btn btn-info"><a href="/Admin/Product/Create">Thêm sản phẩm</a></button>
+                <button class="btn btn-info"><a href="/Manager/Create">Thêm sản phẩm</a></button>
             </div>
 
             <table class="table">
@@ -70,8 +70,10 @@
                             <td>@item.Gia</td>
                             <td>@item.GioiTinh</td>
                             <td>
-                                <button class="btn btn-warning">@Html.ActionLink("Sửa", "Edit", "Product", new { id = item.MaSP.Trim() }, null)</button>
-                                <button class="btn btn-danger">Xóa</button>
+                                <button class="btn btn-warning">@Html.ActionLink("Sửa", "Edit", "Manager", new { id = item.MaSP.Trim() }, null)</button>
+                                <button type="button" class="btn btn-danger">
+                                    @Html.ActionLink("Delete", "RemoveProduct", "Manager", new { id = item.MaSP.Trim() }, null)
+                                </button>
                             </td>
                         </tr>
                     }
